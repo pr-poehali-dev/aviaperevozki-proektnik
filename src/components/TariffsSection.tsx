@@ -53,8 +53,16 @@ export default function TariffsSection() {
               <Button className="w-full mt-6">Выбрать тариф</Button>
             </CardContent>
           </Card>
+          </motion.div>
           
-          <Card className="relative hover:shadow-xl transition-shadow border-blue-500 border-2">
+          <motion.div
+            initial={{ opacity: 0, y: 50, rotateY: 0 }}
+            whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            whileHover={{ y: -10, scale: 1.03 }}
+          >
+            <Card className="relative hover:shadow-xl transition-shadow border-blue-500 border-2">
             <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-blue-600">Популярный</Badge>
             <CardHeader>
               <CardTitle className="text-center">Стандарт</CardTitle>
@@ -84,8 +92,16 @@ export default function TariffsSection() {
               <Button className="w-full mt-6 bg-blue-600 hover:bg-blue-700">Выбрать тариф</Button>
             </CardContent>
           </Card>
+          </motion.div>
           
-          <Card className="relative hover:shadow-xl transition-shadow">
+          <motion.div
+            initial={{ opacity: 0, y: 50, rotateY: 15 }}
+            whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            whileHover={{ y: -10, scale: 1.03 }}
+          >
+            <Card className="relative hover:shadow-xl transition-shadow">
             <CardHeader>
               <CardTitle className="text-center">Премиум</CardTitle>
               <CardDescription className="text-center">Максимальный сервис</CardDescription>
@@ -114,6 +130,7 @@ export default function TariffsSection() {
               <Button className="w-full mt-6">Выбрать тариф</Button>
             </CardContent>
           </Card>
+          </motion.div>
         </div>
       </div>
     </section>
