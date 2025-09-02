@@ -66,8 +66,15 @@ export default function ContactsSection() {
               </div>
             </CardContent>
           </Card>
+          </motion.div>
           
-          <Card className="shadow-xl">
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <Card className="shadow-xl hover:shadow-2xl transition-shadow duration-300">
             <CardHeader>
               <CardTitle>Получить консультацию</CardTitle>
               <CardDescription>Оставьте заявку и мы свяжемся с вами</CardDescription>
@@ -94,6 +101,7 @@ export default function ContactsSection() {
               </Button>
             </CardContent>
           </Card>
+          </motion.div>
         </div>
       </div>
     </section>
