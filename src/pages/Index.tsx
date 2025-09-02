@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -7,8 +7,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
+import { useTelegram } from '@/hooks/useTelegram';
 
 export default function Index() {
+  const { user, theme, showMainButton, hideMainButton, sendData } = useTelegram();
+  
   const [calculator, setCalculator] = useState({
     weight: '',
     from: '',
@@ -25,17 +28,58 @@ export default function Index() {
     const baseRate = calculator.cargo === 'express' ? 180 : 120;
     const price = weight * baseRate;
     setCalculatedPrice(price);
+    
+    // Отправляем данные в Telegram если доступен
+    if (user) {
+      sendData({
+        action: 'calculate_price',
+        user_id: user.id,
+        weight,
+        cargo_type: calculator.cargo,
+        from: calculator.from,
+        to: calculator.to,
+        price
+      });
+    }
   };
+  
+  useEffect(() => {
+    // Показываем главную кнопку для заказа
+    if (calculatedPrice && user) {
+      showMainButton('Заказать доставку', () => {
+        sendData({
+          action: 'order_delivery',
+          user_id: user.id,
+          order_data: {
+            weight: calculator.weight,
+            cargo_type: calculator.cargo,
+            from: calculator.from,
+            to: calculator.to,
+            price: calculatedPrice
+          }
+        });
+      });
+    } else {
+      hideMainButton();
+    }
+  }, [calculatedPrice, user, calculator, showMainButton, hideMainButton, sendData]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-gradient-to-br from-gray-900 to-gray-800 text-white' : 'bg-gradient-to-br from-slate-50 to-blue-50'}`}>
       {/* Header */}
-      <header className="bg-white shadow-sm sticky top-0 z-50">
+      <header className={`${theme === 'dark' ? 'bg-gray-900' : 'bg-white'} shadow-sm sticky top-0 z-50`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-2">
               <Icon name="Plane" size={32} className="text-blue-600" />
-              <h1 className="text-2xl font-bold text-gray-900">АвиаКарго</h1>
+              <div className="flex flex-col">
+                <h1 className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>АвиаКарго</h1>
+                {user && (
+                  <span className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                    Привет, {user.first_name}! 👋
+                  </span>
+                )}
+              </div>
             </div>
             <nav className="hidden md:flex space-x-8">
               <a href="#services" className="text-gray-700 hover:text-blue-600 transition-colors">Услуги</a>
