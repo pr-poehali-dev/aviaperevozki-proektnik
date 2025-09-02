@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -8,13 +9,26 @@ export default function TariffsSection() {
   return (
     <section id="tariffs" className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="text-center mb-16">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.6 }}
+        >
           <h2 className="text-4xl font-bold text-gray-900 mb-4">Тарифы</h2>
           <p className="text-xl text-gray-600">Выберите подходящий тариф для вашего груза</p>
-        </div>
+        </motion.div>
         
         <div className="grid md:grid-cols-3 gap-8">
-          <Card className="relative hover:shadow-xl transition-shadow">
+          <motion.div
+            initial={{ opacity: 0, y: 50, rotateY: -15 }}
+            whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            whileHover={{ y: -10, scale: 1.03 }}
+          >
+            <Card className="relative hover:shadow-xl transition-shadow">
             <CardHeader>
               <CardTitle className="text-center">Эконом</CardTitle>
               <CardDescription className="text-center">Для стандартных грузов</CardDescription>

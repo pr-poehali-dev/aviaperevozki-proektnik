@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,13 +10,25 @@ export default function ContactsSection() {
   return (
     <section id="contacts" className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="text-center mb-16">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.6 }}
+        >
           <h2 className="text-4xl font-bold text-gray-900 mb-4">Контакты</h2>
           <p className="text-xl text-gray-600">Свяжитесь с нами для оформления заказа</p>
-        </div>
+        </motion.div>
         
         <div className="grid lg:grid-cols-2 gap-12">
-          <Card className="shadow-xl">
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <Card className="shadow-xl hover:shadow-2xl transition-shadow duration-300">
             <CardHeader>
               <CardTitle>Контактная информация</CardTitle>
             </CardHeader>

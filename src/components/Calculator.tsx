@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -22,12 +23,24 @@ export default function Calculator({ calculator, setCalculator, calculatedPrice,
   return (
     <section id="calculator" className="py-20 bg-white">
       <div className="max-w-4xl mx-auto px-4">
-        <div className="text-center mb-12">
+        <motion.div 
+          className="text-center mb-12"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.6 }}
+        >
           <h2 className="text-4xl font-bold text-gray-900 mb-4">Калькулятор стоимости</h2>
           <p className="text-xl text-gray-600">Рассчитайте стоимость доставки вашего груза</p>
-        </div>
+        </motion.div>
         
-        <Card className="shadow-xl">
+        <motion.div
+          initial={{ opacity: 0, y: 50, scale: 0.95 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <Card className="shadow-xl hover:shadow-2xl transition-shadow duration-300">
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">
               <Icon name="Calculator" size={24} className="text-blue-600" />
@@ -92,14 +105,27 @@ export default function Calculator({ calculator, setCalculator, calculatedPrice,
               </Button>
               
               {calculatedPrice && (
-                <div className="text-center sm:text-left">
+                <motion.div 
+                  className="text-center sm:text-left"
+                  initial={{ opacity: 0, scale: 0.8, x: 20 }}
+                  animate={{ opacity: 1, scale: 1, x: 0 }}
+                  transition={{ duration: 0.5, type: 'spring', stiffness: 200 }}
+                >
                   <p className="text-sm text-gray-600">Стоимость доставки:</p>
-                  <p className="text-3xl font-bold text-green-600">{calculatedPrice.toLocaleString()} ₽</p>
-                </div>
+                  <motion.p 
+                    className="text-3xl font-bold text-green-600"
+                    initial={{ scale: 0.5 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.3, delay: 0.2, type: 'spring', stiffness: 300 }}
+                  >
+                    {calculatedPrice.toLocaleString()} ₽
+                  </motion.p>
+                </motion.div>
               )}
             </div>
           </CardContent>
-        </Card>
+          </Card>
+        </motion.div>
       </div>
     </section>
   );
